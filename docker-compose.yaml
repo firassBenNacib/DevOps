@@ -34,7 +34,7 @@ services:
     tty: true
   front:
     container_name: front
-    build: ./front
+    build: ./
     image: firaskill12/front:1.0.0
     ports:
       - 4200:80
