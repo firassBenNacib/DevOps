@@ -1,56 +1,37 @@
-version: '3.1'
+version: "3.8"
+
 services:
   mysqldb:
     image: mysql:5.7
     container_name: mysqldb
-    restart: unless-stopped
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=achatdb
     ports:
       - 3307:3306
     volumes:
       - db:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: achatdb
-    networks:
-      mynetwork:
-        ipv4_address: 172.18.0.2
-
   app:
     container_name: app
     depends_on:
       - mysqldb
     build: ./
     image: firaskill12/achat-image:latest
-    restart: on-failure
     ports:
       - 8089:8089
     environment:
+      SPRING_APPLICATION_JSON: '{"spring.datasource.url": "jdbc:mysql://mysqldb:3306/achatdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true", "spring.datasource.username": "root", "spring.datasource.password": "", "spring.jpa.show-sql": "true", "spring.jpa.hibernate.ddl-auto": "update", "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect", "management.endpoints.web.exposure.include": "*", "management.endpoint.health.show-details": "always", "management.endpoint.metrics.enabled": "true", "logging.level.org.springframework": "DEBUG"}'
       SPRING_PROFILES_ACTIVE: prod,actuator
-      MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
-      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
-    networks:
-      mynetwork:
-        ipv4_address: 172.18.0.3
-
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
   front:
     container_name: front
     build: ./
     image: firaskill12/front-image:1.0.0
     ports:
       - 4200:80
-    depends_on:
-      - app
-    networks:
-      mynetwork:
-        ipv4_address: 172.18.0.4
 
 volumes:
   db:
-    
-networks:
-  mynetwork:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.18.0.0/16
