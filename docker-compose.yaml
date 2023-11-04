@@ -16,7 +16,7 @@ services:
     depends_on:
       - mysqldb
     build: ./
-    image: firaskill12/achat-image:1.0.0
+    image: firaskill12/achat-image:latest
     ports:
       - 8089:8089
     environment:
