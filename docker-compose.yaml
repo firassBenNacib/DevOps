@@ -16,7 +16,7 @@ services:
     depends_on:
       - mysqldb
     build: ./
-    image: firaskill12/achat-image:${DOCKER_IMAGE_TAG}
+    image: firaskill12/achat-image:DOCKER_IMAGE_TAG_PLACEHOLDER
     ports:
       - 8089:8089
     environment:
@@ -29,7 +29,7 @@ services:
   front:
     container_name: front
     build: ./
-    image: firaskill12/front-image:${DOCKER_IMAGE_TAG}
+    image: firaskill12/front-image:DOCKER_IMAGE_TAG_PLACEHOLDER
     ports:
       - 4200:80
 
