@@ -26,9 +26,9 @@ services:
         "spring.datasource.password" :  "",
         "spring.jpa.show-sql" : "true",
         "spring.jpa.hibernate.ddl-auto" : "update",
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
-        "management.endpoints.web.exposure.include" : "prometheus,health"
-        "management.endpoint.health.show-details" : "always"
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "management.endpoints.web.exposure.include" : "prometheus,health",
+        "management.endpoint.health.show-details" : "always",
         "management.endpoint.metrics.enabled" : "true"
        }'
     volumes:
