@@ -29,7 +29,7 @@ services:
   front:
     container_name: front
     build: ./
-    image: firaskill12/front-image:abf
+    image: firaskill12/front-image:abbr
     ports:
       - 4200:80
 
